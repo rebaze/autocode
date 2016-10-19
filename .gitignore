@@ -1,0 +1,6 @@
+.idea/
+target/
+bin/
+load/
+build/
+.gradle/
