@@ -59,7 +59,7 @@ public class Mystique
                     e.printStackTrace();
                 }
 
-                System.out.println("Would copy from " + in +  " to " + out);
+                //System.out.println("Would copy from " + in +  " to " + out);
             }
         }
     }

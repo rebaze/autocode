@@ -31,6 +31,7 @@ public class LoadFromClasspathRule implements MutationRule
         try
         {
             File out = File.createTempFile( "myst_created_",".data", new File("target") );
+            out.deleteOnExit();
             try (BufferedSource in =  buffer(source(LoadFromClasspathRule.class.getResourceAsStream( path )))){
                 try ( BufferedSink sink = buffer( Okio.sink( out ))) {
                     sink.writeAll( in );

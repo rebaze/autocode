@@ -32,6 +32,7 @@ public class ReplaceInFileMutationRule implements MutationRule
             content = content.replaceAll( origin,replacement );
             String last = item.getUpdatedSource().getName();
             File f = File.createTempFile("myst_",last,new File("target"));
+            f.deleteOnExit();
 
             Files.write(f.toPath(), content.getBytes());
             item.updateModification(f);
