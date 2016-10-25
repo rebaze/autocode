@@ -16,11 +16,17 @@ public class MutableItem
     // holds references to all intermediate sources.
     private List<File> sourceStack = new ArrayList<>(  );
 
-    public MutableItem( Universe universe, String sourcePath ) throws IOException
+    public MutableItem( Universe universe, String sourcePath, String targetPath ) throws IOException
     {
         this.sourcePath = sourcePath;
         this.universe = universe;
         this.sourceStack.add(universe.locate(sourcePath));
+        this.targetPath = targetPath;
+    }
+
+    public MutableItem( Universe universe, String sourcePath ) throws IOException
+    {
+        this(universe,sourcePath,null);
     }
 
     @Override public String toString()

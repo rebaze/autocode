@@ -15,6 +15,11 @@ public class MutationContext
         rules.add(builder.build());
     }
 
+    public void addRule( MutationRule rule )
+    {
+        rules.add(rule);
+    }
+
     public void applyTo( Universe universe )
     {
         for (MutableItem path : universe.getItems())

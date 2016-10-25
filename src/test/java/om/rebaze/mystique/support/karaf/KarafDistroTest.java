@@ -1,8 +1,6 @@
 package om.rebaze.mystique.support.karaf;
 
-import com.rebaze.mystique.LocalUniverse;
-import com.rebaze.mystique.MutationContext;
-import com.rebaze.mystique.Mystique;
+import com.rebaze.mystique.*;
 import com.rebaze.mystique.support.karaf.KarafParameters;
 import com.rebaze.mystique.support.karaf.KarafRules;
 import org.junit.Test;
@@ -25,12 +23,15 @@ public class KarafDistroTest
         karafRules.applyTo( universe );
 
         // Materialize to disk
-        Mystique mystique = new Mystique( new File( "target/customKaraf" ) );
-        mystique.materialize( universe );
+        Materializer mat = new LocalCopyingMaterializer( new File( "target/customKaraf" ) );
+
+        mat.materialize( universe );
 
         // assume changes:
         File out = new File( "target/customKaraf/bin/mylauncher" );
         assertTrue( "Launcher should exist", out.exists() );
 
     }
+
+
 }

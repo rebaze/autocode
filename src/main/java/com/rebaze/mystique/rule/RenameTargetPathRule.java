@@ -19,6 +19,9 @@ public class RenameTargetPathRule implements MutationRule
 
     @Override public boolean apply( MutableItem item )
     {
+        if (item.getSourcePath() == null) {
+            return false;
+        }
         item.setTargetPath( item.getTargetPath().replaceAll( pattern,rename ));
         return true;
     }

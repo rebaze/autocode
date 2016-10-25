@@ -31,49 +31,9 @@ public class Mystique
         this.target = target;
     }
 
-
-
-
-    // Apply changes on disk or create patch
-    // TODO: If source is a git repo and there are no pending changes, we can offer an in-place materialization.
-    public void materialize( LocalUniverse universe ) throws FileNotFoundException
+    public void exec(Universe input, MutationContext ctx, Materializer mat) throws IOException
     {
-        for ( MutableItem path : universe.getItems() )
-        {
-            if ( path.getTargetPath() != null )
-            {
-                File in = path.getUpdatedSource();
-                File out = createOutput( path.getTargetPath());
-                if (!out.getParentFile().exists()) {
-                    out.getParentFile().mkdirs();
-                }
-
-                try (BufferedSource source = buffer( Okio.source( in )))
-                {
-                    try ( BufferedSink sink = buffer(Okio.sink( out ))) {
-                        sink.writeAll( source );
-                    }
-                }
-                catch ( IOException e )
-                {
-                    e.printStackTrace();
-                }
-
-                //System.out.println("Would copy from " + in +  " to " + out);
-            }
-        }
+        ctx.applyTo( input );
+        mat.materialize( input );
     }
-
-    private File createOutput( String path )
-    {
-        File f = new File(target,path);
-        if (f.exists()) {
-            //throw new IllegalStateException( "File " + f.getAbsolutePath() + " already exists. You have a conflict in your rule space." );
-        }
-        return f;
-    }
-
-
-
-
 }
