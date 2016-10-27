@@ -9,6 +9,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import static com.rebaze.mystique.Utils.readAll;
+
 /**
  * Created by tonit on 18/10/16.
  */
@@ -44,25 +46,5 @@ public class ReplaceInFileMutationRule implements MutationRule
         }
         // add an intermediate
         return true;
-    }
-
-    private String readAll( File f )
-    {
-        String input = "";
-
-        try ( BufferedReader file = new BufferedReader( new FileReader( f ) ) )
-        {
-
-            String line;
-
-            while ( ( line = file.readLine() ) != null )
-                input += line + '\n';
-
-        }
-        catch ( IOException e )
-        {
-            e.printStackTrace();
-        }
-        return input;
     }
 }

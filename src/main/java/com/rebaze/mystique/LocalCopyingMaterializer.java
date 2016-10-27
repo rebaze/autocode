@@ -6,6 +6,8 @@ import okio.Okio;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 
 import static okio.Okio.buffer;
 
@@ -16,13 +18,39 @@ public class LocalCopyingMaterializer implements Materializer
 {
     private final File target;
 
-    public LocalCopyingMaterializer( File target )
+    public LocalCopyingMaterializer( File target, boolean pruneBefore )
     {
         this.target = target;
+        if (pruneBefore) {
+            try
+            {
+                delete( target );
+                Files.deleteIfExists(target.toPath());
+            }
+            catch ( IOException e )
+            {
+                throw new IllegalArgumentException( "Cannot delete " + target,e );
+            }
+        }
     }
 
-    // Apply changes on disk or create patch
-    // TODO: If source is a git repo and there are no pending changes, we can offer an in-place materialization.
+    private void delete( File f ) throws IOException
+    {
+        if ( f.isDirectory() )
+        {
+            for ( File sub : f.listFiles() )
+            {
+                delete( sub );
+            }
+        }
+        f.delete();
+    }
+
+    public LocalCopyingMaterializer( File target )
+    {
+        this(target,false);
+    }
+
     @Override
     public void materialize( Universe universe ) throws IOException
     {

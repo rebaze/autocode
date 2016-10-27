@@ -17,13 +17,14 @@ public class KarafDistroTest
         // Input
         KarafParameters karafCustom = new KarafParameters();
         karafCustom.launcherName = "mylauncher";
+        karafCustom.productName = "My Distro";
 
         MutationContext karafRules = KarafRules.karafRules( karafCustom );
         LocalUniverse universe = new LocalUniverse( new File( "/Users/tonit/cardtech/payengine/apache-karaf-4.0.7/" ) );
         karafRules.applyTo( universe );
 
         // Materialize to disk
-        Materializer mat = new LocalCopyingMaterializer( new File( "target/customKaraf" ) );
+        Materializer mat = new LocalCopyingMaterializer( new File( "target/customKaraf" ), true );
 
         mat.materialize( universe );
 

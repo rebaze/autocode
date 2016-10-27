@@ -43,6 +43,12 @@ public class MutationBuilder
         return this;
     }
 
+    public MutationBuilder template( String template, Object object )
+    {
+        ruleStack.add( new MustacheRule( template, object ));
+        return this;
+    }
+
     public MutationRule build() {
         return new SequentialMutationRule(ruleStack);
     }
