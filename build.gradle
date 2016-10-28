@@ -1,8 +1,16 @@
-apply plugin: 'java'
+plugins {
+    id "com.diffplug.gradle.spotless" version "2.3.0"
+    id "com.diffplug.gradle.oomph.ide" version "3.3.0"
+}
+
 apply plugin: 'maven'
+apply plugin: 'java-gradle-plugin'
 
 group = 'com.rebaze.mystique'
 version = '0.1.0-SNAPSHOT'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -14,10 +22,12 @@ repositories {
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
-    // The production code uses the SLF4J logging API at compile time
+    compile gradleApi()
+    compile 'org.projectlombok:lombok:1.16.10'
     compile 'org.slf4j:slf4j-api:1.7.21'
     compile 'com.github.spullara.mustache.java:compiler:0.9.4'
     compile 'com.squareup.okio:okio:1.11.0'
+    compile 'org.rauschig:jarchivelib:0.7.1'
     compile 'org.mockito:mockito-core:2.2.7'
 
 
@@ -27,6 +37,25 @@ dependencies {
     // 'test.useTestNG()' to your build script.
     testCompile 'junit:junit:4.12'
 }
+
+
+
+apply plugin: 'com.diffplug.gradle.oomph.ide'
+
+oomphIde {
+    repoEclipseLatest()
+    jdt {}
+    eclipseIni {
+        vmargs('-Xmx2g')    // IDE can have up to 2 gigs of RAM
+    }
+    style {
+        classicTheme()  // oldschool cool
+        niceText()      // with nice fonts and visible whitespace
+    }
+}
+
+
+
 
 
 
