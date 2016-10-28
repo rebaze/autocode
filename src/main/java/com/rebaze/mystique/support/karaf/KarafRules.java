@@ -17,7 +17,7 @@ public class KarafRules
         ctx.addRule( mutation().match( ".*" ).copy() );
         Map<String, Object> scopes = new HashMap<String, Object>();
         scopes.put("productName", "Mustache");
-        ctx.addRule( mutation().match( "README" ).template( "/karaf/README",customization ));
+      //  ctx.addRule( mutation().match( "README" ).template( "/karaf/README",customization ));
 
         ctx.addRule( mutation().match( "bin/karaf.*" ).rename( "karaf",customization.launcherName ) );
         ctx.addRule( mutation().match( ".*\\.DS_Store" ).ignore() );
