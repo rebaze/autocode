@@ -1,0 +1,8 @@
+PATH
+de.sma.iguana.studio.feature
+{{package}}.feature
+
+PATH
+de.sma.iguana.studio.ide.feature
+{{package}}.feature
+

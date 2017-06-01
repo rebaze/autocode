@@ -1,8 +1,8 @@
 package om.rebaze.mystique.support.karaf;
 
-import com.rebaze.mystique.*;
-import com.rebaze.mystique.support.karaf.KarafParameters;
-import com.rebaze.mystique.support.karaf.KarafRules;
+import com.rebaze.bespoke.*;
+import com.rebaze.bespoke.support.karaf.KarafParameters;
+import com.rebaze.bespoke.support.karaf.KarafRules;
 import org.junit.Test;
 
 import java.io.File;

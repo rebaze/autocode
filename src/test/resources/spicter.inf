@@ -1,0 +1,4 @@
+instructions.configure=org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//nexus.spicter.com/ign_stream/bundles/spicter-studio-update/,type:0,name:spicterStudioUpdate,enabled:true); \
+  org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//nexus.spicter.com/ign_stream/bundles/spicter-studio-update/,type:1,name:spicterStudioUpdate,enabled:true); \
+  org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//nexus.spicter.com/ign_stream/bundles/eclipse.neon.p2/,type:0,name:EclipseNeon,enabled:true); \
+  org.eclipse.equinox.p2.touchpoint.eclipse.addRepository(location:http${#58}//nexus.spicter.com/ign_stream/bundles/eclipse.neon.p2/,type:1,name:EclipseNeon,enabled:true);
