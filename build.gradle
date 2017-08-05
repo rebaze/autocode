@@ -29,10 +29,10 @@ repositories {
 dependencies {
     compile gradleApi()
     testCompile gradleTestKit()
-    compile 'org.projectlombok:lombok:1.16.10'
+    compile 'org.projectlombok:lombok:1.16.18'
     compile 'org.slf4j:slf4j-api:1.7.21'
     compile 'com.github.spullara.mustache.java:compiler:0.9.4'
-    compile 'com.squareup.okio:okio:1.11.0'
+    compile 'com.squareup.okio:okio:1.13.0'
     compile 'org.rauschig:jarchivelib:0.7.1'
     compile 'org.mockito:mockito-core:2.2.7'
     compile 'com.google.jimfs:jimfs:1.1'
