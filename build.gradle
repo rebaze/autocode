@@ -11,7 +11,7 @@ idea {
 }
 
 
-group = 'com.rebaze.bespoke'
+group = 'com.rebaze.autocode'
 version = '0.1.0-SNAPSHOT'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
