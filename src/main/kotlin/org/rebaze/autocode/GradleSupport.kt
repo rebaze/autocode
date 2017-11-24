@@ -5,12 +5,12 @@ import org.gradle.tooling.GradleConnector
 import org.gradle.tooling.ProgressListener
 import java.io.File
 
-class GradleSupport {
-    fun execute(project:Project) : Boolean {
-        return true
-        val connection = GradleConnector.newConnector()
-                .forProjectDirectory(project.location)
-                .connect()
+class GradleSupport(project: Project) : AutoCloseable, Verifier {
+    private val connection = GradleConnector.newConnector()
+            .forProjectDirectory(project.location)
+            .connect()
+
+    override fun execute(): Boolean {
         try {
             val build = connection.newBuild()
             build.setJavaHome(File("/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contents/Home"))
@@ -18,16 +18,19 @@ class GradleSupport {
                 //println("${project.location} : ${it.description}")
             }
             build.addProgressListener(listener)
+            build.setColorOutput(true)
+            build.withArguments("--build-cache", "--parallel");
+
             //build.setStandardOutput(System.out)
             //build.setStandardError(System.err)
 
             val runable = build.forTasks("test")
             runable.run()
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             if (e.cause is LocationAwareException) {
                 val locationException = e.cause as LocationAwareException
                 //println("build failed: ${locationException.location}")
-            }else {
+            } else {
                 val locationException = e.cause
                 //println("build failed: ${locationException.location}")
 
@@ -36,10 +39,12 @@ class GradleSupport {
             }
             return false
         }
-        finally {
-            connection.close()
-        }
+
         return true
+    }
+
+    override fun close() {
+        connection.close()
     }
 }
 

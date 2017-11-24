@@ -6,7 +6,6 @@ import org.eclipse.jgit.lib.Repository
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder
 import java.io.File
 import java.io.IOException
-import java.io.PrintWriter
 
 class GitSupport(val project : Project) {
 
@@ -78,13 +77,12 @@ class GitSupport(val project : Project) {
         return repository
     }
 
-    fun save(v: String) {
+    fun save(v: Refactoring) {
         // create a branch, commit, and switch back to original:
         val repository: Repository = openRepository()
         val baseBranch = repository.branch
 
-        val correct = v
-                .replace("\\:".toRegex(),"_")
+        val correct = v.toString().replace("\\:".toRegex(),"_")
         Git(repository).use { git: Git ->
             val name = git.branchCreate().setName("autocode/suggestion-$correct")
                     .call().name
