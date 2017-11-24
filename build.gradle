@@ -1,7 +1,17 @@
+buildscript {
+    ext.kotlin_version="1.2.0-rc-39"
+    ext.gradletToolingApiVersion="4.3.1"
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
 plugins {
     id "idea"
     id "java-gradle-plugin"
+
 }
+apply plugin: 'kotlin'
+
 
 idea {
     module {
@@ -9,7 +19,6 @@ idea {
         downloadSources = true
     }
 }
-
 
 group = 'com.rebaze.autocode'
 version = '0.1.0-SNAPSHOT'
@@ -22,31 +31,39 @@ repositories {
     mavenLocal()
     mavenCentral()
     maven { url 'https://repo.gradle.org/gradle/libs-releases' }
+    maven { url 'http://dl.bintray.com/kotlin/kotlin-eap-1.2' }
+
 
 }
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
-    compile gradleApi()
-    testCompile gradleTestKit()
-    compile 'org.projectlombok:lombok:1.16.18'
+    compile 'info.picocli:picocli:2.0.3'
     compile 'org.slf4j:slf4j-api:1.7.21'
     compile 'com.github.spullara.mustache.java:compiler:0.9.4'
     compile 'com.squareup.okio:okio:1.13.0'
     compile 'org.rauschig:jarchivelib:0.7.1'
-    compile 'org.mockito:mockito-core:2.2.7'
     compile 'com.google.jimfs:jimfs:1.1'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile 'org.eclipse.jgit:org.eclipse.jgit:4.9.0.201710071750-r'
+    compile "org.gradle:gradle-tooling-api:${gradletToolingApiVersion}"
+    //runtime 'org.slf4j:slf4j-simple:1.7.10'
+
+    testCompile 'org.mockito:mockito-core:2.2.7'
     testCompile 'junit:junit:4.12'
 }
 
-gradlePlugin {
-    plugins {
-        kitPlugin {
-            id = "com.rebaze.kit"
-            implementationClass = "com.rebaze.bespoke.gradle.KitPlugin"
-        }
+task execJar(type: Jar) {
+    archiveName 'autocode-cli.jar'
+    manifest {
+        attributes 'Main-Class': 'com.rebaze.autocode.Autocode'
     }
+    from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
+    exclude("**/BCKEY.*")
+    with jar
 }
+
+jar.dependsOn('execJar')
 
 
 
